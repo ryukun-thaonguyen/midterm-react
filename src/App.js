@@ -1,26 +1,29 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
 
-function App() {
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import Header from './components/Header';
+import Home from './components/Home';
+import Add from './components/Add';
+import data from './Data/Room';
+
+
+export default class App extends Component {
+  constructor(){
+    super();
+    if(localStorage.getItem('rooms')==null){
+      localStorage.setItem('rooms',JSON.stringify(data));
+    }
+    
+  }
+  render(){
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+      <BrowserRouter>
+         <Header/>
+          <Switch>
+            <Route path="/" component={Home} exact/>
+            <Route path='/add' component={Add} />
+          </Switch>
+      </BrowserRouter>
+      );
+}}
 
-export default App;
